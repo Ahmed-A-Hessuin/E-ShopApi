@@ -19,6 +19,8 @@ const authRoute = require('./routes/authRoute');
 const reviewsRoute = require('./routes/reviewRoute');
 const wishlistRoute = require('./routes/wishlistRoute');
 const cartRoute = require('./routes/cartRoute');
+const orderRoute = require('./routes/orderRoute');
+
 
 
 
@@ -48,6 +50,8 @@ app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/reviews', reviewsRoute);
 app.use('/api/v1/wishlist', wishlistRoute);
 app.use('/api/v1/cart', cartRoute);
+app.use('/api/v1/orders', orderRoute);
+
 
 
 
