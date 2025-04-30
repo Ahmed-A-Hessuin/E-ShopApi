@@ -147,7 +147,7 @@ exports.verifyPassResetCode = asyncHandler(async (req, res, next) => {
         .update(req.body.resetCode)
         .digest('hex');
     const user = await User.findOne({
-        passwordResetCode: hashedResetCode,
+        passwordResetCode: hashedResetCode, 
         passwordResetExpires: { $gt: Date.now() }
     })
     if (!user) {
