@@ -1,8 +1,11 @@
 const path = require('path')
 
 const express = require('express');
+const cors = require('cors')
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const compression = require('compression')
+
 
 dotenv.config({ path: 'config.env' });
 const ApiError = require('./utils/apiError');
@@ -21,15 +24,19 @@ const wishlistRoute = require('./routes/wishlistRoute');
 const cartRoute = require('./routes/cartRoute');
 const orderRoute = require('./routes/orderRoute');
 
-
-
-
-
 // Connect with db
 dbConnection();
 
 // express app
 const app = express();
+
+// Enable other domains to access your application
+app.use(cors())
+app.options('*', cors()) // include before other routes
+
+// compress all responses
+app.use(compression())
+
 app.use(express.static(path.join(__dirname, 'uploads')));
 
 // Middlewares
@@ -51,9 +58,6 @@ app.use('/api/v1/reviews', reviewsRoute);
 app.use('/api/v1/wishlist', wishlistRoute);
 app.use('/api/v1/cart', cartRoute);
 app.use('/api/v1/orders', orderRoute);
-
-
-
 
 
 app.all('*', (req, res, next) => {
