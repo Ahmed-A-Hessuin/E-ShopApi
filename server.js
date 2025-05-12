@@ -36,7 +36,6 @@ app.options('*', cors()) // include before other routes
 
 // compress all responses
 app.use(compression())
-
 app.use(express.static(path.join(__dirname, 'uploads')));
 
 // Middlewares
