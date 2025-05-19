@@ -12,7 +12,7 @@ const ApiError = require('../utils/apiError');
 //     }
 // })
 
-// 2 - MemmoryStorge Engine
+// 2 - Memmory Storge Engine
 const multerOptions = () => {
     const multerStorage = multer.memoryStorage()
     const multerFilter = function (req, file, cd) {
