@@ -12,6 +12,7 @@ const {
     getProduct,
     updateProduct,
     deleteProduct,
+    approveProduct,
     resizeProductImage,
     uploadProductImages
 } = require('../services/productService');
@@ -30,11 +31,11 @@ router
     .get(getProducts)
     .post(
         authService.protect,
-        authService.allowedTo("admin", "manager"),
+        authService.allowedTo("user", "admin"),
         uploadProductImages,
         resizeProductImage,
         createProductValidator,
-        createProduct
+        createProduct,
     );
 router
     .route('/:id')
@@ -52,5 +53,7 @@ router
         authService.allowedTo("admin"),
         deleteProductValidator,
         deleteProduct);
+
+router.put('/:id/approve', authService.protect, authService.allowedTo('admin'), approveProduct);
 
 module.exports = router;

@@ -11,8 +11,7 @@ const productSchema = new mongoose.Schema(
         },
         slug: {
             type: String,
-            required: true,
-            lowercase: true,
+                lowercase: true,
         },
         description: {
             type: String,
@@ -32,6 +31,17 @@ const productSchema = new mongoose.Schema(
             required: [true, 'Product price is required'],
             trim: true,
             max: [200000, 'Too long product price'],
+        },
+        type: {
+            type: String,
+            required: [true, 'Type of Product is required'],
+            enum: ['old', 'new'],
+
+        },
+        status: {
+            type: String,
+            enum: ['pending', 'approved', 'rejected'],
+            default: 'pending'
         },
         priceAfterDiscount: {
             type: Number,

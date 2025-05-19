@@ -24,6 +24,9 @@ exports.createProductValidator = [
         .withMessage('Product quantity is required')
         .isNumeric()
         .withMessage('Product quantity must be a number'),
+    check('type')
+        .notEmpty()
+        .withMessage('Type of Product is required'),
     check('sold')
         .optional()
         .isNumeric()

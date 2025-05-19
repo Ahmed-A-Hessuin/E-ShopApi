@@ -30,6 +30,9 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
     asyncHandler(async (req, res) => {
+        // if (Model.modelName === 'Product') {
+        //     req.body.status = 'pending';
+        // }
         const newDoc = await Model.create(req.body);
         res.status(201).json({ Data: newDoc });
     });
@@ -56,7 +59,9 @@ exports.getAll = (Model, modelName = '') =>
         if (req.filterObj) {
             filter = req.filterObj
         }
-
+        if (modelName.toLowerCase() === 'product') {
+            filter.status = 'approved';
+        }
         // Build Query
         const countDocuments = await Model.countDocuments()
         const apiFeatures = new ApiFeatures(req.query, Model.find(filter))
