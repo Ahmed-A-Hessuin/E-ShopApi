@@ -30,9 +30,6 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
     asyncHandler(async (req, res) => {
-        // if (Model.modelName === 'Product') {
-        //     req.body.status = 'pending';
-        // }
         const newDoc = await Model.create(req.body);
         res.status(201).json({ Data: newDoc });
     });
