@@ -17,12 +17,14 @@ exports.uploadCategoryImage = uploadSingleImage('image');
 exports.resizeImage = asyncHandler(async (req, res, next) => {
     if (!req.file) return next();
 
-    const processedBuffer = await sharp(req.file.buffer)
+    // تعديل الصورة
+    const buffer = await sharp(req.file.buffer)
         .resize(600, 600)
         .toFormat('jpeg')
         .jpeg({ quality: 90 })
         .toBuffer();
 
+    // رفع الصورة لـ Cloudinary
     const result = await new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
             {
@@ -35,12 +37,15 @@ exports.resizeImage = asyncHandler(async (req, res, next) => {
                 else reject(error);
             }
         );
-        stream.end(processedBuffer);
+        stream.end(buffer);
     });
 
+    // تخزين رابط الصورة في req.body عشان تستخدمه في إنشاء الـ category
     req.body.image = result.secure_url;
+
     next();
 });
+
 
 
 // @desc    Get list of categories

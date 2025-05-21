@@ -30,9 +30,23 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
     asyncHandler(async (req, res) => {
+        // ✅ فقط لو الموديل هو Product
+        if (Model.modelName === 'Product') {
+            // ✅ تحقق من نوع المستخدم
+            if (req.user && req.user.role === 'user') {
+                req.body.status = 'pending'; // لو مستخدم عادي، نجعل الحالة معلقة
+            } else {
+                req.body.status = 'approved'; // لو admin أو manager نجعلها معتمدة مباشرةً
+            }
+
+            // ربط المستخدم بالمنتج
+            req.body.user = req.user._id;
+        }
+
         const newDoc = await Model.create(req.body);
         res.status(201).json({ Data: newDoc });
     });
+
 
 exports.getOne = (Model, PopulationOpt) =>
     asyncHandler(async (req, res, next) => {

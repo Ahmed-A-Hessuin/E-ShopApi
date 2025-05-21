@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            minlength: [3, 'Too short product title'],
+            minlength: [2, 'Too short product title'],
             maxlength: [100, 'Too long product title'],
         },
         slug: {
@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema(
         description: {
             type: String,
             required: [true, 'Product description is required'],
-            minlength: [20, 'Too short product description'],
+            minlength: [10, 'Too short product description'],
         },
         quantity: {
             type: Number,
@@ -30,12 +30,12 @@ const productSchema = new mongoose.Schema(
             type: Number,
             required: [true, 'Product price is required'],
             trim: true,
-            max: [200000, 'Too long product price'],
+            max: [200000000, 'Too long product price'],
         },
         type: {
             type: String,
             required: [true, 'Type of Product is required'],
-            enum: ['old', 'new'],
+            enum: ['used', 'new'],
 
         },
         status: {
